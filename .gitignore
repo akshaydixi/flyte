@@ -1,0 +1,4 @@
+flyte-service/.idea/*
+flyte-service/target/*
+flyte-service/project/project/*
+flyte-service/project/target/*
