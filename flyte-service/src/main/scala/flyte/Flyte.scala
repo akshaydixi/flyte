@@ -2,8 +2,9 @@ package flyte
 
 import java.net.URL
 
-import de.l3s.boilerpipe._
 import akka.actor.Actor
+import de.l3s.boilerpipe._
+import org.xml.sax.InputSource
 import spray.routing._
 import spray.http._
 import MediaTypes._
@@ -28,10 +29,13 @@ trait Flyte extends HttpService {
           }
         }
       } ~
-      put {
+      post {
         formField('url) { url =>
           complete {
-            extractors.ArticleExtractor.INSTANCE.getText(new URL(url))
+            val is = new InputSource()
+            is.setEncoding("UTF-8")
+            is.setByteStream((new URL(url)).openStream())
+            extractors.ArticleExtractor.INSTANCE.getText(is)
           }
         }
       }
